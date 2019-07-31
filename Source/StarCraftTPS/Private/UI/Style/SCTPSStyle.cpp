@@ -34,6 +34,6 @@ const ISlateStyle& SCTPSStyle::Get()
 
 TSharedRef<class FSlateStyleSet> SCTPSStyle::Create()
 {
-	TSharedRef<FSlateStyleSet>StyleRef = FSlateGameResources::New(SCTPSStyle::GetStyleSetName, "/Game/UI/Style", "/Game/UI/Style");
+	TSharedRef<FSlateStyleSet>StyleRef = FSlateGameResources::New(SCTPSStyle::GetStyleSetName(), "/Game/UI/Style", "/Game/UI/Style");
 	return StyleRef;
 }
