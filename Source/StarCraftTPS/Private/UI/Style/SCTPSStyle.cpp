@@ -3,6 +3,7 @@
 #include "SCTPSStyle.h"
 #include "SlateGameResources.h"
 
+//单例模式变量不可以放在构造函数里，必须放在这里
 TSharedPtr<FSlateStyleSet>SCTPSStyle::SCTPSStyleInstance = NULL;
 
 void SCTPSStyle::Initiazle()
@@ -10,12 +11,14 @@ void SCTPSStyle::Initiazle()
 	if (!SCTPSStyleInstance.IsValid())
 	{
 		SCTPSStyleInstance = Create();
+		//注册Style
 		FSlateStyleRegistry::RegisterSlateStyle(*SCTPSStyleInstance);
 	}
 }
 
 void SCTPSStyle::Shutdown()
 {
+	//注销Style
 	FSlateStyleRegistry::UnRegisterSlateStyle(*SCTPSStyleInstance);
 	ensure(SCTPSStyleInstance.IsUnique());
 	SCTPSStyleInstance.Reset();
