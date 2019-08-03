@@ -4,3 +4,9 @@
 
 #include "CoreMinimal.h"
 
+class FSCTPSModule : public FDefaultGameModuleImpl
+{
+	virtual void StartupModule()override;
+	virtual void ShutdownModule()override;
+};
+

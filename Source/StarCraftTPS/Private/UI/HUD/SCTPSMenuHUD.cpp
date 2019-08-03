@@ -4,6 +4,7 @@
 #include "SSCTPSMenuHUDWidget.h"
 #include "SlateBasics.h"
 
+
 ASCTPSMenuHUD::ASCTPSMenuHUD()
 {
 	if (GEngine&&GEngine->GameViewport)

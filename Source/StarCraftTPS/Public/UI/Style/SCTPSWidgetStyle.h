@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Styling/SlateWidgetStyle.h"
 #include "SlateWidgetStyleContainerBase.h"
+#include "SlateBrush.h"
 
 #include "SCTPSWidgetStyle.generated.h"
 
@@ -24,6 +25,11 @@ struct STARCRAFTTPS_API FSCTPSStyle : public FSlateWidgetStyle
 	static const FName TypeName;
 	virtual const FName GetTypeName() const override { return TypeName; };
 	static const FSCTPSStyle& GetDefault();
+
+	UPROPERTY(EditAnywhere, Category = HUD)
+		FSlateBrush MenueHUDBackgroundBrush;
+	UPROPERTY(EditAnywhere, Category = HUD)
+		FSlateBrush MenueImage;
 };
 
 /**

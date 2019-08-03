@@ -10,6 +10,6 @@ ASCMenuController::ASCMenuController()
 void ASCMenuController::BeginPlay()
 {
 	FInputModeUIOnly InputMode;
-	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
+	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
 	SetInputMode(InputMode);
 }
