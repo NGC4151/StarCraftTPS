@@ -10,7 +10,6 @@ ASCMenuController::ASCMenuController()
 void ASCMenuController::BeginPlay()
 {
 	FInputModeUIOnly InputMode;
-	//设置鼠标的视口锁定行为
 	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
 	SetInputMode(InputMode);
 }

@@ -13,13 +13,10 @@ class STARCRAFTTPS_API SCTPSStyle
 public:
 	/*初始化，创建一个Style实例并将其注册到编辑器*/
 	static void Initiazle();
-
 	/*注销Style实例并将其Reset*/
 	static void Shutdown();
-
 	/*设置Style的名字，然后通过这个名字在Game目录中找到这个名字的文件*/
 	static FName GetStyleSetName();
-
 	/*获取Style实例*/
 	static const ISlateStyle& Get();
 

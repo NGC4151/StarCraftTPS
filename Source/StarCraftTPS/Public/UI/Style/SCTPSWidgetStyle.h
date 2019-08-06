@@ -26,10 +26,8 @@ struct STARCRAFTTPS_API FSCTPSStyle : public FSlateWidgetStyle
 	virtual const FName GetTypeName() const override { return TypeName; };
 	static const FSCTPSStyle& GetDefault();
 
-	//±³¾°Í¼Æ¬
 	UPROPERTY(EditAnywhere, Category = HUD)
 		FSlateBrush MenueHUDBackgroundBrush;
-	//²Ëµ¥Í¼Æ¬
 	UPROPERTY(EditAnywhere, Category = HUD)
 		FSlateBrush MenueImage;
 };
