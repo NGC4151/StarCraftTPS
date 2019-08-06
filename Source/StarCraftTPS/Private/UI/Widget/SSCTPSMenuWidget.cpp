@@ -6,11 +6,14 @@
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SSCTPSMenuWidget::Construct(const FArguments& InArgs)
 {
-	/*
+	
+	//»ñÈ¡±à¼­Æ÷µÄMenuStyle
+	MenueStyle = &SCTPSStyle::Get().GetWidgetStyle<FSCTPSStyle>("BP_SCTPSMenuStyle");
+
 	ChildSlot
 	[
-		// Populate the widget
+		
 	];
-	*/
+
 }
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION

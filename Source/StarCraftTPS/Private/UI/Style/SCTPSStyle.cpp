@@ -3,7 +3,7 @@
 #include "SCTPSStyle.h"
 #include "SlateGameResources.h"
 
-//单例模式变量不可以放在构造函数里，必须放在这里
+//单例模式变量不可以放在构造函数里，必须放在这里,并初始化
 TSharedPtr<FSlateStyleSet>SCTPSStyle::SCTPSStyleInstance = NULL;
 
 void SCTPSStyle::Initiazle()

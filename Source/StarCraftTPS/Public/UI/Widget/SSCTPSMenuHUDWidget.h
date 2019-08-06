@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "Widgets/SCompoundWidget.h"
 
+class SOverlay;
+class SSCTPSMenuWidget;
+
 /**
  * 
  */
@@ -19,6 +22,21 @@ public:
 	void Construct(const FArguments& InArgs);
 
 private:
+	float GetUIScaler()const;
+
+	FVector2D GetViewportSize()const;
+
+	FReply OnClick();
+
+private:
+
 	//这个结构是SCTPSWidgetStyle里声明的，里面存储画刷、控件等元素
 	const struct FSCTPSStyle *MenueStyle;
+	//DPI缩放系数
+	TAttribute<float>UIScaler;
+	//获取Image的Slot
+	SOverlay::FOverlaySlot* ImageSlot;
+
+	TSharedPtr<SSCTPSMenuWidget>MenueWidget;
+
 };
