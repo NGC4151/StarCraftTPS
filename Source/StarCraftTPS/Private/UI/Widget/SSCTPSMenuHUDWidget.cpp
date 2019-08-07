@@ -16,7 +16,7 @@ void SSCTPSMenuHUDWidget::Construct(const FArguments& InArgs)
 	//获取编辑器的MenuStyle
 	MenueStyle = &SCTPSStyle::Get().GetWidgetStyle<FSCTPSStyle>("BP_SCTPSMenuStyle");
 
-	//绑定
+	//将UIScaler绑定到GetUIScaler函数，UIScaler通过这个函数不断更新
 	UIScaler.Bind(this, &SSCTPSMenuHUDWidget::GetUIScaler);
 
 	ChildSlot
@@ -39,13 +39,13 @@ void SSCTPSMenuHUDWidget::Construct(const FArguments& InArgs)
 					[
 						SAssignNew(MenueWidget,SSCTPSMenuWidget)
 					]
-				+SOverlay::Slot()
-.HAlign(HAlign_Left)
-.VAlign(VAlign_Top)
-[
-	SNew(SButton)
-.OnClicked(this,&SSCTPSMenuHUDWidget::OnClick)
-]
+				+ SOverlay::Slot()
+					.HAlign(HAlign_Left)
+					.VAlign(VAlign_Top)
+					[
+						SNew(SButton)
+						.OnClicked(this, &SSCTPSMenuHUDWidget::OnClick)
+					]
 			]
 
 		];
