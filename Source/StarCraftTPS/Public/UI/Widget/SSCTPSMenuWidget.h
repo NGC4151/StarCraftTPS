@@ -20,6 +20,10 @@ public:
 	void Construct(const FArguments& InArgs);
 
 private:
+	//保存根节点的
+	TSharedPtr<SBox>RootSizeBox;
+	//保存标题
+	TSharedPtr<STextBlock>TitleText;
 	//这个结构是SCTPSWidgetStyle里声明的，里面存储画刷、控件等元素
 	const struct FSCTPSStyle *MenueStyle;
 };

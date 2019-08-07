@@ -35,10 +35,11 @@ void SSCTPSMenuHUDWidget::Construct(const FArguments& InArgs)
 				+ SOverlay::Slot()
 					.HAlign(HAlign_Center)
 					.VAlign(VAlign_Center)
-                    .Expose(ImageSlot)
+                   /* .Expose(ImageSlot) */
 					[
 						SAssignNew(MenueWidget,SSCTPSMenuWidget)
 					]
+				/*
 				+ SOverlay::Slot()
 					.HAlign(HAlign_Left)
 					.VAlign(VAlign_Top)
@@ -46,6 +47,8 @@ void SSCTPSMenuHUDWidget::Construct(const FArguments& InArgs)
 						SNew(SButton)
 						.OnClicked(this, &SSCTPSMenuHUDWidget::OnClick)
 					]
+				*/
+				
 			]
 
 		];
@@ -55,11 +58,13 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 float SSCTPSMenuHUDWidget::GetUIScaler() const
 {
+	//缩放规则是按屏幕尺寸的Y轴来缩放，例如Y的值是1080，缩放就是1,值为540缩放就是0.5
 	return GetViewportSize().Y / 1080.f;
 }
 
 FVector2D SSCTPSMenuHUDWidget::GetViewportSize() const
 {
+	//设定一个默认的值
 	FVector2D Result(1920, 1080);
 	if (GEngine&&GEngine->GameViewport)
 	{
@@ -68,9 +73,12 @@ FVector2D SSCTPSMenuHUDWidget::GetViewportSize() const
 
 	return Result;
 }
-
+/*
 FReply SSCTPSMenuHUDWidget::OnClick()
 {
+	//通过ImageSlot来访问并更改插槽里的属性
 	ImageSlot->HAlign(HAlign_Right).VAlign(VAlign_Bottom);
 	return FReply::Handled();
 }
+*/
+

@@ -28,8 +28,14 @@ struct STARCRAFTTPS_API FSCTPSStyle : public FSlateWidgetStyle
 
 	UPROPERTY(EditAnywhere, Category = HUD)
 		FSlateBrush MenueHUDBackgroundBrush;
-	UPROPERTY(EditAnywhere, Category = HUD)
+	UPROPERTY(EditAnywhere, Category = Menu)
 		FSlateBrush MenueImage;
+	UPROPERTY(EditAnywhere, Category = Menu)
+		FSlateBrush LeftIconImage;
+	UPROPERTY(EditAnywhere, Category = Menu)
+		FSlateBrush RightIconImage;
+	UPROPERTY(EditAnywhere, Category = Menu)
+		FSlateBrush TitleBorderImage;
 };
 
 /**
