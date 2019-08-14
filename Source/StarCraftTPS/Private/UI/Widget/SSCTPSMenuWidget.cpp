@@ -52,8 +52,8 @@ void SSCTPSMenuWidget::Construct(const FArguments& InArgs)
 		.VAlign(VAlign_Top)
 		[
 			SNew(SBox)
-			.WidthOverride(400.f)
-		.HeightOverride(100.f)
+			.WidthOverride(288.f)
+		.HeightOverride(68.f)
 		[
 			SNew(SBorder)
 			.BorderImage(&MenueStyle->TitleBorderImage)
@@ -70,8 +70,8 @@ void SSCTPSMenuWidget::Construct(const FArguments& InArgs)
 		]
 
 		];
-	RootSizeBox->SetWidthOverride(600.f);
-	RootSizeBox->SetHeightOverride(510.f);
+	RootSizeBox->SetWidthOverride(519.f);
+	RootSizeBox->SetHeightOverride(800.f);
 
 }
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
