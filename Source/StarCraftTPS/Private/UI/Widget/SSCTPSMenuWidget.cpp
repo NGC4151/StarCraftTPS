@@ -4,9 +4,11 @@
 #include "SlateOptMacros.h"
 #include "SButton.h"
 #include "Style/SCTPSStyle.h"
-#include	"SBox.h"
+#include "SBox.h"
 #include "STextBlock.h"
 #include "SBorder.h"
+#include "SSCTPSMenuItemWidget.h"
+#include "SBoxPanel.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SSCTPSMenuWidget::Construct(const FArguments& InArgs)
@@ -30,30 +32,14 @@ void SSCTPSMenuWidget::Construct(const FArguments& InArgs)
 			SNew(SImage)
 			.Image(&MenueStyle->MenueImage)
 		]
-	+ SOverlay::Slot()
-		.HAlign(HAlign_Right)
-		.VAlign(VAlign_Center)
-		.Padding(FMargin(0.f, 25.f, 0.f, 0.f))
-		[
-			SNew(SImage)
-			.Image(&MenueStyle->RightIconImage)
-		]
 
-	+ SOverlay::Slot()
-		.HAlign(HAlign_Left)
-		.VAlign(VAlign_Center)
-		.Padding(FMargin(0.f, 25.f, 0.f, 0.f))
-		[
-			SNew(SImage)
-			.Image(&MenueStyle->LeftIconImage)
-		]
 	+ SOverlay::Slot()
 		.HAlign(HAlign_Center)
 		.VAlign(VAlign_Top)
 		[
 			SNew(SBox)
-			.WidthOverride(288.f)
-		.HeightOverride(68.f)
+			.WidthOverride(400.f)
+		    .HeightOverride(100.f)
 		[
 			SNew(SBorder)
 			.BorderImage(&MenueStyle->TitleBorderImage)
@@ -62,16 +48,42 @@ void SSCTPSMenuWidget::Construct(const FArguments& InArgs)
 		[
 			SAssignNew(TitleText, STextBlock)
 			.Font(SCTPSStyle::Get().GetFontStyle("MenuItemFont"))
-		    .Text(FText::FromString("StarCraft"))
+		    .Text(NSLOCTEXT("SCTPSMenu","Menu","Menu"))
 		]
 		]
 		]
-
+	+ SOverlay::Slot()
+		.HAlign(HAlign_Center)
+		.VAlign(VAlign_Top)
+		.Padding(FMargin(0.f, 130.f, 0.f, 0.f))
+		[
+			SAssignNew(ContentBox, SVerticalBox)
+		]
 		]
 
 		];
+
+
 	RootSizeBox->SetWidthOverride(519.f);
 	RootSizeBox->SetHeightOverride(800.f);
 
+	//
+	ContentBox->AddSlot()
+		[
+			SNew(SSCTPSMenuItemWidget)
+			.ItemText(NSLOCTEXT("SCTPSMenu", "StartGame", "StartGame"))
+		    .ItemType(EMenuItem::StartGame)
+		    .OnClicked(this, &SSCTPSMenuWidget::MenuItemOnClicked)
+		];
+
 }
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
+
+void SSCTPSMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, "Button had press Down£¡");
+	}
+	
+}

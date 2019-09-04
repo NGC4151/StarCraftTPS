@@ -6,6 +6,7 @@
 #include "Styling/SlateWidgetStyle.h"
 #include "SlateWidgetStyleContainerBase.h"
 #include "SlateBrush.h"
+#include "SlateFontInfo.h"
 
 #include "SCTPSWidgetStyle.generated.h"
 
@@ -31,11 +32,17 @@ struct STARCRAFTTPS_API FSCTPSStyle : public FSlateWidgetStyle
 	UPROPERTY(EditAnywhere, Category = Menu)
 		FSlateBrush MenueImage;
 	UPROPERTY(EditAnywhere, Category = Menu)
-		FSlateBrush LeftIconImage;
-	UPROPERTY(EditAnywhere, Category = Menu)
-		FSlateBrush RightIconImage;
+		FSlateBrush MenuItemImage;
 	UPROPERTY(EditAnywhere, Category = Menu)
 		FSlateBrush TitleBorderImage;
+
+	//×ÖÌå´óÐ¡
+	UPROPERTY(EditAnywhere, Category = Menu)
+		FSlateFontInfo Font_60;
+	UPROPERTY(EditAnywhere, Category = Menu)
+		FSlateFontInfo Font_40;
+	UPROPERTY(EditAnywhere, Category = Menu)
+		FSlateFontInfo Font_30;
 };
 
 /**
