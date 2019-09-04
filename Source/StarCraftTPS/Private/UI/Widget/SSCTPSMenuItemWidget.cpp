@@ -37,7 +37,7 @@ void SSCTPSMenuItemWidget::Construct(const FArguments& InArgs)
 		[
 			SNew(STextBlock)
 			.Text(InArgs._ItemText)
-		    .Font(MenueStyle->Font_60)
+		    .Font(MenueStyle->Font_40)
 		]
 		]
 

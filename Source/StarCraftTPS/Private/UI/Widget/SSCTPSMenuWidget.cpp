@@ -9,6 +9,8 @@
 #include "SBorder.h"
 #include "SSCTPSMenuItemWidget.h"
 #include "SBoxPanel.h"
+#include "SSCTPSGameOptionWidget.h"
+#include "SCTPSHelper.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SSCTPSMenuWidget::Construct(const FArguments& InArgs)
@@ -70,10 +72,8 @@ void SSCTPSMenuWidget::Construct(const FArguments& InArgs)
 	//
 	ContentBox->AddSlot()
 		[
-			SNew(SSCTPSMenuItemWidget)
-			.ItemText(NSLOCTEXT("SCTPSMenu", "StartGame", "StartGame"))
-		    .ItemType(EMenuItem::StartGame)
-		    .OnClicked(this, &SSCTPSMenuWidget::MenuItemOnClicked)
+			SNew(SSCTPSGameOptionWidget)
+			
 		];
 
 }
@@ -81,9 +81,6 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 void SSCTPSMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
 {
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, "Button had press Down£¡");
-	}
+	SCTPSHelper::Debug(FString("Button had press down!"), 3.0f, FColor::Blue);
 	
 }

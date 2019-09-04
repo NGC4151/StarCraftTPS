@@ -5,11 +5,13 @@
 #include "CoreMinimal.h"
 #include "Widgets/SCompoundWidget.h"
 #include "SCTPSType.h"
-#include "Style/SCTPSWidgetStyle.h"
+#include "SCTPSWidgetStyle.h"
+
 
 class SBox;
 class STextBlock;
 class SVerticalBox;
+
 
 	
 /**

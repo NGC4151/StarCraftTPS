@@ -27,6 +27,9 @@ struct STARCRAFTTPS_API FSCTPSStyle : public FSlateWidgetStyle
 	virtual const FName GetTypeName() const override { return TypeName; };
 	static const FSCTPSStyle& GetDefault();
 
+	/**
+	 * 菜单的各个UI的图片
+	 */
 	UPROPERTY(EditAnywhere, Category = HUD)
 		FSlateBrush MenueHUDBackgroundBrush;
 	UPROPERTY(EditAnywhere, Category = Menu)
@@ -35,14 +38,24 @@ struct STARCRAFTTPS_API FSCTPSStyle : public FSlateWidgetStyle
 		FSlateBrush MenuItemImage;
 	UPROPERTY(EditAnywhere, Category = Menu)
 		FSlateBrush TitleBorderImage;
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSlateBrush SettingsBackgroundImage;
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSlateBrush CheckBoxSelectedImage;
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSlateBrush CheckBoxNoSelectedImage;
 
 	//字体大小
-	UPROPERTY(EditAnywhere, Category = Menu)
+	UPROPERTY(EditAnywhere, Category = Common)
 		FSlateFontInfo Font_60;
-	UPROPERTY(EditAnywhere, Category = Menu)
+	UPROPERTY(EditAnywhere, Category = Common)
 		FSlateFontInfo Font_40;
-	UPROPERTY(EditAnywhere, Category = Menu)
+	UPROPERTY(EditAnywhere, Category = Common)
 		FSlateFontInfo Font_30;
+	UPROPERTY(EditAnywhere, Category = Common)
+		FLinearColor FontColor_B;
+	UPROPERTY(EditAnywhere, Category = Common)
+		FLinearColor FontColor_W;
 };
 
 /**

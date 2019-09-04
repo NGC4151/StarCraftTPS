@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SCTPSHandle.h"
+#include "Internationalization.h"
 
 TSharedPtr<SCTPSHandle>SCTPSHandle::DataInstans = NULL;
 
@@ -41,6 +42,8 @@ TSharedRef<SCTPSHandle> SCTPSHandle::Create()
 
 SCTPSHandle::SCTPSHandle()
 {
+	//设置默认语言为中文
+	CurrentCultrue = ECultureTeam::ZN;
 }
 
 
