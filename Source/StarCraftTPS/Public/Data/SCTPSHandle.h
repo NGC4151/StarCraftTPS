@@ -19,8 +19,14 @@ public:
 
 	void ChangeLanguage(ECultureTeam Culture);
 
+	void ChangeVolume(float MusicVol,float SoundVol);
+
+
 public:
 	ECultureTeam CurrentCultrue;
+
+	float MusicValue;
+	float SoundValue;
 
 private:
 	//创建单例，方法和数据分开存放

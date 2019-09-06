@@ -11,6 +11,7 @@
 #include "SBoxPanel.h"
 #include "SSCTPSGameOptionWidget.h"
 #include "SCTPSHelper.h"
+#include "SCTPSHandle.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SSCTPSMenuWidget::Construct(const FArguments& InArgs)
@@ -73,6 +74,8 @@ void SSCTPSMenuWidget::Construct(const FArguments& InArgs)
 	ContentBox->AddSlot()
 		[
 			SNew(SSCTPSGameOptionWidget)
+.ChangeCulture(this,&SSCTPSMenuWidget::ChangeCulture)
+.ChangeVolume(this,&SSCTPSMenuWidget::ChangeVolume)
 			
 		];
 
@@ -83,4 +86,14 @@ void SSCTPSMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
 {
 	SCTPSHelper::Debug(FString("Button had press down!"), 3.0f, FColor::Blue);
 	
+}
+
+void SSCTPSMenuWidget::ChangeCulture(ECultureTeam Cultrue)
+{
+	SCTPSHandle::Get()->ChangeLanguage(Cultrue);
+}
+
+void SSCTPSMenuWidget::ChangeVolume(const float MusicVol, const float SoundVol)
+{
+	SCTPSHandle::Get()->ChangeVolume(MusicVol, SoundVol);
 }

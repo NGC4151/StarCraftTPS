@@ -34,6 +34,18 @@ void SCTPSHandle::ChangeLanguage(ECultureTeam Culture)
 	CurrentCultrue = Culture;
 }
 
+void SCTPSHandle::ChangeVolume(float MusicVol, float SoundVol)
+{
+	if (MusicVol>0)
+	{
+		MusicValue = MusicVol;
+	}
+	if (SoundVol>0)
+	{
+		SoundValue = SoundVol;
+	}
+}
+
 TSharedRef<SCTPSHandle> SCTPSHandle::Create()
 {
 	TSharedRef<SCTPSHandle>DataRef = MakeShareable(new SCTPSHandle());
@@ -44,6 +56,9 @@ SCTPSHandle::SCTPSHandle()
 {
 	//设置默认语言为中文
 	CurrentCultrue = ECultureTeam::ZN;
+
+	 MusicValue=0.5f;
+	 SoundValue=0.5f;
 }
 
 

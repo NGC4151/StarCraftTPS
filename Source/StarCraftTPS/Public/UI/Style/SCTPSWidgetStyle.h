@@ -44,6 +44,10 @@ struct STARCRAFTTPS_API FSCTPSStyle : public FSlateWidgetStyle
 		FSlateBrush CheckBoxSelectedImage;
 	UPROPERTY(EditAnywhere, Category = GameOption)
 		FSlateBrush CheckBoxNoSelectedImage;
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSlateBrush SliderImage;
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSliderStyle MySliderStyle;
 
 	//×ÖÌå´óÐ¡
 	UPROPERTY(EditAnywhere, Category = Common)

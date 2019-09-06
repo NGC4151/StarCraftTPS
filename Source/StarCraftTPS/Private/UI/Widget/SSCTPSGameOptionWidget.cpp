@@ -12,12 +12,17 @@
 #include "SBoxPanel.h"
 #include "SCheckBox.h"
 #include "SCTPSHandle.h"
+#include "SSlider.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SSCTPSGameOptionWidget::Construct(const FArguments& InArgs)
 {
 	//获取编辑器的MenuStyle
 	MenueStyle = &SCTPSStyle::Get().GetWidgetStyle<FSCTPSStyle>("BP_SCTPSMenuStyle");
+
+	//获取委托
+	ChangeCulture = InArgs._ChangeCulture;
+	ChangeVolume = InArgs._ChangeVolume;
 
 	ChildSlot
 		[
@@ -56,7 +61,7 @@ void SSCTPSGameOptionWidget::Construct(const FArguments& InArgs)
 			.OnCheckStateChanged(this, &SSCTPSGameOptionWidget::ZhCheckBoxStateChanged)
 		[
 			SNew(STextBlock)
-			.Font(MenueStyle->Font_30)
+		.Font(MenueStyle->Font_30)
 		.ColorAndOpacity(MenueStyle->FontColor_W)
 		.Text(NSLOCTEXT("SCTPSMenu", "Chinese", "Chinese"))
 		]
@@ -71,19 +76,66 @@ void SSCTPSGameOptionWidget::Construct(const FArguments& InArgs)
 			.OnCheckStateChanged(this, &SSCTPSGameOptionWidget::EnCheckBoxStateChanged)
 		[
 			SNew(STextBlock)
-			.Font(MenueStyle->Font_30)
+		.Font(MenueStyle->Font_30)
 		.ColorAndOpacity(MenueStyle->FontColor_W)
 		.Text(NSLOCTEXT("SCTPSMenu", "English", "English"))
 		]
 		]
 		]
-//第二行
+	//第二行
 	+ SVerticalBox::Slot()
 		.HAlign(HAlign_Fill)
 		.VAlign(VAlign_Fill)
 		.FillHeight(1.f)
 		[
 			SNew(SOverlay)
+			+ SOverlay::Slot()
+		.HAlign(HAlign_Left)
+		.VAlign(VAlign_Center)
+		[
+			SNew(STextBlock)
+			.Font(MenueStyle->Font_30)
+		.ColorAndOpacity(MenueStyle->FontColor_W)
+		.Text(NSLOCTEXT("SCTPSMenu", "Music", "Music"))
+		]
+
+	+ SOverlay::Slot()
+		.HAlign(HAlign_Center)
+		.VAlign(VAlign_Center)
+		[
+			SNew(SBox)
+			.WidthOverride(240.f)
+		[
+			SNew(SOverlay)
+			+ SOverlay::Slot()
+		.HAlign(HAlign_Fill)
+		.VAlign(VAlign_Center)
+		.Padding(FMargin(30.f, 0.f))
+		[
+			SNew(SImage)
+			.Image(&MenueStyle->SliderImage)
+		]
+	+ SOverlay::Slot()
+		.HAlign(HAlign_Fill)
+		.VAlign(VAlign_Center)
+		[
+			SAssignNew(MusicSlider, SSlider)
+			.Style(&MenueStyle->MySliderStyle)
+		.OnValueChanged(this, &SSCTPSGameOptionWidget::ChangeMusicValue)
+		]
+
+
+		]
+		]
+	+ SOverlay::Slot()
+		.HAlign(HAlign_Right)
+		.VAlign(VAlign_Center)
+		[
+			SAssignNew(MusicTextBlock, STextBlock)
+			.Font(MenueStyle->Font_40)
+		.ColorAndOpacity(MenueStyle->FontColor_W)
+
+		]
 		]
 //第三行
 	+ SVerticalBox::Slot()
@@ -92,6 +144,53 @@ void SSCTPSGameOptionWidget::Construct(const FArguments& InArgs)
 		.FillHeight(1.f)
 		[
 			SNew(SOverlay)
+			+ SOverlay::Slot()
+		.HAlign(HAlign_Left)
+		.VAlign(VAlign_Center)
+		[
+			SNew(STextBlock)
+			.Font(MenueStyle->Font_30)
+		.ColorAndOpacity(MenueStyle->FontColor_W)
+		.Text(NSLOCTEXT("SCTPSMenu", "Sound", "Sound"))
+		]
+
+	+ SOverlay::Slot()
+		.HAlign(HAlign_Center)
+		.VAlign(VAlign_Center)
+		[
+			SNew(SBox)
+			.WidthOverride(240.f)
+		[
+			SNew(SOverlay)
+			+ SOverlay::Slot()
+		.HAlign(HAlign_Fill)
+		.VAlign(VAlign_Center)
+		.Padding(FMargin(30.f, 0.f))
+		[
+			SNew(SImage)
+			.Image(&MenueStyle->SliderImage)
+		]
+	+ SOverlay::Slot()
+		.HAlign(HAlign_Fill)
+		.VAlign(VAlign_Center)
+		[
+			SAssignNew(SoundSlider, SSlider)
+			.Style(&MenueStyle->MySliderStyle)
+		.OnValueChanged(this, &SSCTPSGameOptionWidget::ChangeSoundValue)
+		]
+
+
+		]
+		]
+	+ SOverlay::Slot()
+		.HAlign(HAlign_Right)
+		.VAlign(VAlign_Center)
+		[
+			SAssignNew(SoundTextBlock, STextBlock)
+			.Font(MenueStyle->Font_40)
+		.ColorAndOpacity(MenueStyle->FontColor_W)
+
+		]
 		]
 
 		]
@@ -133,6 +232,14 @@ void SSCTPSGameOptionWidget::StyleInitialized()
 
 	}
 
+	SoundTextBlock->SetText(FText::FromString(FString::FromInt(FMath::RoundToInt(SCTPSHandle::Get()->SoundValue * 100)) 
+		+ FString("%")));
+	MusicTextBlock->SetText(FText::FromString(FString::FromInt(FMath::RoundToInt(SCTPSHandle::Get()->MusicValue * 100))
+		+ FString("%")));
+
+	MusicSlider->SetValue(SCTPSHandle::Get()->MusicValue);
+	SoundSlider->SetValue(SCTPSHandle::Get()->SoundValue);
+
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -143,7 +250,8 @@ void SSCTPSGameOptionWidget::ZhCheckBoxStateChanged(ECheckBoxState NewState)
 	EnCheckBox->SetIsChecked(ECheckBoxState::Unchecked);
 	CnCheckBox->SetIsChecked(ECheckBoxState::Checked);
 	//改变语言
-	SCTPSHandle::Get()->ChangeLanguage(ECultureTeam::ZN);
+	//SCTPSHandle::Get()->ChangeLanguage(ECultureTeam::ZN);
+	ChangeCulture.ExecuteIfBound(ECultureTeam::ZN);
 }
 
 void SSCTPSGameOptionWidget::EnCheckBoxStateChanged(ECheckBoxState NewState)
@@ -151,5 +259,21 @@ void SSCTPSGameOptionWidget::EnCheckBoxStateChanged(ECheckBoxState NewState)
 	EnCheckBox->SetIsChecked(ECheckBoxState::Checked);
 	CnCheckBox->SetIsChecked(ECheckBoxState::Unchecked);
 
-	SCTPSHandle::Get()->ChangeLanguage(ECultureTeam::EN);
+	//改变语言
+	//SCTPSHandle::Get()->ChangeLanguage(ECultureTeam::EN);
+	ChangeCulture.ExecuteIfBound(ECultureTeam::EN);
+}
+
+void SSCTPSGameOptionWidget::ChangeMusicValue(float Value)
+{
+	MusicTextBlock->SetText(FText::FromString(FString::FromInt(FMath::RoundToInt(Value * 100)) + FString("%")));
+	//SCTPSHandle::ChangeVolume(Value, -1);
+	ChangeVolume.ExecuteIfBound(Value, -1);
+}
+
+void SSCTPSGameOptionWidget::ChangeSoundValue(float Value)
+{
+	SoundTextBlock->SetText(FText::FromString(FString::FromInt(FMath::RoundToInt(Value * 100)) + FString("%")));
+	//SCTPSHandle::ChangeVolume(-1, -Value);
+	ChangeVolume.ExecuteIfBound(-1, -Value);
 }

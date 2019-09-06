@@ -8,12 +8,11 @@
 #include "SCTPSWidgetStyle.h"
 
 
+
 class SBox;
 class STextBlock;
 class SVerticalBox;
 
-
-	
 /**
  * 
  */
@@ -30,6 +29,11 @@ public:
 private:
 	//绑定到各个MenuItem的方法
 	void MenuItemOnClicked(EMenuItem::Type ItemType);
+	//修改语言
+	void ChangeCulture(ECultureTeam Cultrue);
+	//修改音量
+	void ChangeVolume(const float MusicVol, const float SoundVol);
+
 
 private:
 	//保存根节点的
@@ -40,4 +44,6 @@ private:
 	const struct FSCTPSStyle *MenueStyle;
 	//垂直面板的指针
 	TSharedPtr<SVerticalBox>ContentBox;
+
+	
 };
