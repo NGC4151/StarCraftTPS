@@ -61,5 +61,26 @@ SCTPSHandle::SCTPSHandle()
 	 SoundValue=0.5f;
 }
 
+template<typename TEnum>
+FString SCTPSHandle::GetEnumValueAsString(const FString& Name, TEnum Value)
+{
+	const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, *Name, true);
+	if (!EnumPtr)
+	{
+		return FString("InValid!");
+	}
+}
+
+template<typename TEnum>
+TEnum SCTPSHandle::GetEnumValueFromString(const FString& Name, FString Value)
+{
+	const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, *Name, true);
+	if (!EnumPtr)
+	{
+		return TEnum(0);
+	}
+	return (TEnum)EnumPtr->GetIndexByName(FName(*FString(Value)));
+}
+
 
 
