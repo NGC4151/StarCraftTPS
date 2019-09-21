@@ -1,0 +1,24 @@
+ [
+		{
+			"Culture": "EN"
+		},
+		{
+			"MusicVol": 0.3
+		},
+		{
+			"SoundVol": 0.3
+		},
+		{
+			"SaveData": [
+				{
+					"0": "Default"
+				},
+				{
+					"1": "RecordOne"
+				},
+				{
+					"2": "RecordTwo"
+				}
+			]
+		}
+	]

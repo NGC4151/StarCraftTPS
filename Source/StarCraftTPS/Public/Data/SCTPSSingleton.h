@@ -23,3 +23,31 @@ private:
 	
 };
 
+
+template<class T>
+TSharedPtr<T>SCTPSSingleton<T>::TInstance = NULL;
+
+template<class T>
+void SCTPSSingleton<T>::Initialize()
+{
+
+	if (!TInstance.IsValid())
+	{
+		TInstance = Create();
+	}
+}
+
+template<class T>
+TSharedRef<T> SCTPSSingleton<T>::Create()
+{
+	TSharedRef<T>TRef = MakeShareable(new T());
+	return TRef;
+}
+
+template<class T>
+TSharedPtr<T> SCTPSSingleton<T>::Get()
+{
+	Initialize();
+	return TInstance;
+}
+

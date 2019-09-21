@@ -27,6 +27,8 @@ public:
 
 	float MusicValue;
 	float SoundValue;
+	//存档数据
+	TArray<FString>SaveDataList;
 
 private:
 	//创建单例，方法和数据分开存放
@@ -39,6 +41,9 @@ private:
 	//根据字符串获取enum的值
 	template<typename TEnum>
 	TEnum GetEnumValueFromString(const FString& Name, FString Value);
+
+	//初始化存档数据
+	void InitializeSaveData();
 
 private:
 	static TSharedPtr<SCTPSHandle>DataInstans;

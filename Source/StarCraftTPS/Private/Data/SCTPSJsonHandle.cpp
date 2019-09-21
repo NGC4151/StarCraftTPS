@@ -1,11 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SCTPSJsonHandle.h"
+#include "SCTPSHelper.h"
 
 SCTPSJsonHandle::SCTPSJsonHandle()
 {
 	SaveDataFileName = FString("SaveData.json");
-	RelativePath = FString("Res/ConfigData");
+	RelativePath = FString("Res/DataConfig/");
 }
 
 void SCTPSJsonHandle::ReadSaveData(FString& Culture, float& MusicVol, float&SoundVol, TArray<FString>& SaveDataList)
@@ -17,6 +18,7 @@ void SCTPSJsonHandle::ReadSaveData(FString& Culture, float& MusicVol, float&Soun
 	TArray<TSharedPtr<FJsonValue>>JsonParsed;
 	TSharedRef<TJsonReader<TCHAR>>JsonReader = TJsonReaderFactory<TCHAR>::Create(JsonValue);
 
+	//将读取到的字符串存入JsonReader，它一个TJsonReader类型的数组引用JsonReader，然后将解析的结果保存至JsonParsed
 	if (FJsonSerializer::Deserialize(JsonReader,JsonParsed))
 	{
 		//获取数据
@@ -43,10 +45,11 @@ bool SCTPSJsonHandle::LoadStringFromFile(const FString& FileName, const FString&
 	if (!FileName.IsEmpty())
 	{
 		//获取绝对路径
-		FString AbsoPath = FPaths::GameContentDir() + RelativePath + FileName;
+		FString AbsoPath = FPaths::ProjectContentDir()+ RelativePath + FileName;
+		SCTPSHelper::Debug(AbsoPath, 5.0f, FColor::Red);
 		if (FPaths::FileExists(AbsoPath))
 		{
-			if (FFileHelper::LoadANSITextFileToStrings(ResultString,*AbsoPath))
+			if (FFileHelper::LoadFileToString(ResultString,*AbsoPath))
 			{
 				return true;
 			}
@@ -61,5 +64,6 @@ bool SCTPSJsonHandle::LoadStringFromFile(const FString& FileName, const FString&
 			SCTPSHelper::Debug(FString("File No Exist!"), 3.0f, FColor::Red);
 		}
 	}
+	return false;
 }
 

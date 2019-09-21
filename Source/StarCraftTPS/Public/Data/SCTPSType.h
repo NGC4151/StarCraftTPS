@@ -11,7 +11,7 @@
 UENUM()
 enum class ECultureTeam : uint8 {
 	EN=0,
-	ZN=1
+	ZN
 };
 
 //Menu按钮的类型
