@@ -35,6 +35,9 @@ void SCTPSHandle::ChangeLanguage(ECultureTeam Culture)
 	}
 
 	CurrentCultrue = Culture;
+
+	//更新存档数据
+	SCTPSSingleton<SCTPSJsonHandle>::Get()->UpDateSaveData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCultrue), MusicValue, SoundValue, &SaveDataList);
 }
 
 void SCTPSHandle::ChangeVolume(float MusicVol, float SoundVol)
@@ -47,6 +50,8 @@ void SCTPSHandle::ChangeVolume(float MusicVol, float SoundVol)
 	{
 		SoundValue = SoundVol;
 	}
+	//更新存档数据
+	SCTPSSingleton<SCTPSJsonHandle>::Get()->UpDateSaveData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCultrue), MusicValue, SoundValue, &SaveDataList);
 }
 
 TSharedRef<SCTPSHandle> SCTPSHandle::Create()
@@ -69,6 +74,7 @@ FString SCTPSHandle::GetEnumValueAsString(const FString& Name, TEnum Value)
 	{
 		return FString("InValid!");
 	}
+	return EnumPtr->GetNameStringByIndex((int32)Value);
 }
 
 template<typename TEnum>
@@ -84,6 +90,7 @@ TEnum SCTPSHandle::GetEnumValueFromString(const FString& Name, FString Value)
 }
 
 void SCTPSHandle::InitializeSaveData()
+
 {
 	//获取语言
 	FString  Culture;

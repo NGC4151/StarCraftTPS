@@ -275,5 +275,5 @@ void SSCTPSGameOptionWidget::ChangeSoundValue(float Value)
 {
 	SoundTextBlock->SetText(FText::FromString(FString::FromInt(FMath::RoundToInt(Value * 100)) + FString("%")));
 	//SCTPSHandle::ChangeVolume(-1, -Value);
-	ChangeVolume.ExecuteIfBound(-1, -Value);
+	ChangeVolume.ExecuteIfBound(-1, Value);
 }
