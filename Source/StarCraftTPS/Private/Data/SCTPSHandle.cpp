@@ -92,6 +92,8 @@ TEnum SCTPSHandle::GetEnumValueFromString(const FString& Name, FString Value)
 void SCTPSHandle::InitializeSaveData()
 
 {
+	SaveName = FString("");
+
 	//ªÒ»°”Ô—‘
 	FString  Culture;
 

@@ -1,17 +1,23 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SSCTPSMenuWidget.h"
+#include "SNewGameWidget.h"
+#include "SChooseSaveDataWidget.h"
+#include "SSCTPSGameOptionWidget.h"
+#include "SSCTPSMenuItemWidget.h"
 #include "SlateOptMacros.h"
-#include "SButton.h"
 #include "Style/SCTPSStyle.h"
+#include "SCTPSWidgetStyle.h"
+#include "SCTPSHelper.h"
+#include "SCTPSHandle.h"
+#include "SButton.h"
 #include "SBox.h"
 #include "STextBlock.h"
 #include "SBorder.h"
-#include "SSCTPSMenuItemWidget.h"
 #include "SBoxPanel.h"
-#include "SSCTPSGameOptionWidget.h"
-#include "SCTPSHelper.h"
-#include "SCTPSHandle.h"
+
+
+
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SSCTPSMenuWidget::Construct(const FArguments& InArgs)
@@ -73,10 +79,8 @@ void SSCTPSMenuWidget::Construct(const FArguments& InArgs)
 	//
 	ContentBox->AddSlot()
 		[
-			SNew(SSCTPSGameOptionWidget)
-.ChangeCulture(this,&SSCTPSMenuWidget::ChangeCulture)
-.ChangeVolume(this,&SSCTPSMenuWidget::ChangeVolume)
-			
+			SNew(SChooseSaveDataWidget)
+		
 		];
 
 }

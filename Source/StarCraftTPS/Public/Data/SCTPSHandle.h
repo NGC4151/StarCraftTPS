@@ -27,8 +27,13 @@ public:
 
 	float MusicValue;
 	float SoundValue;
+
 	//存档数据
 	TArray<FString>SaveDataList;
+
+	//输入的存档名
+	FString SaveName;
+
 
 private:
 	//创建单例，方法和数据分开存放
