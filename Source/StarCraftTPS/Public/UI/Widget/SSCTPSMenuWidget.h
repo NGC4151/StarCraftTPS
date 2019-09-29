@@ -6,6 +6,7 @@
 #include "Widgets/SCompoundWidget.h"
 #include "SCTPSType.h"
 
+
 class SBox;
 class STextBlock;
 class SVerticalBox;
@@ -13,6 +14,7 @@ class SSCTPSGameOptionWidget;
 class SNewGameWidget;
 class SChooseSaveDataWidget;
 struct MenuGroup;
+
 
 
 /**
@@ -28,6 +30,8 @@ public:
 	/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
 
+	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)override;
+
 private:
 	//绑定到各个MenuItem的方法
 	void MenuItemOnClicked(EMenuItem::Type ItemType);
@@ -41,6 +45,10 @@ private:
 	void ChooseWidget(EMenuType::Type WidgetType);
 	//修改控件宽和高
 	void ChangeWidgetSize(float Newwidth, float NewHeight);
+	//初始化动画
+	void InitializedAnimation();
+	//通知某个控件播放动画
+	void PlayAnimation(EMenuType::Type MenuType);
 
 
 private:
@@ -60,6 +68,23 @@ private:
 	TSharedPtr<SSCTPSGameOptionWidget>GameOptionWidget;
 	//选择存档控件指针
 	TSharedPtr<SChooseSaveDataWidget>ChooseSaveDataWidget;
+
+
+	//曲线动画播放器
+	FCurveSequence MenuAnimation;
+	//曲线控制器
+	FCurveHandle CurveHandle;
+	//保存当前高度
+	float CurrentHeight;
+	//控件是否显示
+	bool IsWidgetShow;
+	//按键是否锁住
+	bool ControlLocked;
+	//保存当前的动画状态
+	EMenuAnim::Type AnimState;
+	//保存当前的菜单
+	EMenuType::Type CurrentMenu;
+
 
 
 	

@@ -48,4 +48,17 @@ namespace EMenuType
 		ChooseSaveData
 
 	};
+
+
+}
+
+//¶¯»­×´Ì¬Ã¶¾Ù
+namespace EMenuAnim
+{
+	enum Type
+	{
+		stop,
+		open,
+		close
+	};
 }
