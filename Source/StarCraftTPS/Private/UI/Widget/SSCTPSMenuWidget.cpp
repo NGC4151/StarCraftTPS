@@ -15,6 +15,28 @@
 #include "STextBlock.h"
 #include "SBorder.h"
 #include "SBoxPanel.h"
+#include "SSpacerWidget.h"
+
+
+struct MenuGroup 
+{
+	//菜单标题
+	FText MenuName;
+	//菜单高度
+	float MenuHeight;
+	//下属组件
+	TArray<TSharedPtr<SCompoundWidget>>ChildWidget;
+	//构造函数
+	MenuGroup(const FText Name, const float Height, TArray<TSharedPtr<SCompoundWidget>>* Children)
+	{
+		MenuName = Name;
+		MenuHeight = Height;
+		for (TArray<TSharedPtr<SCompoundWidget>>::TIterator It(*Children);It;++It)
+		{
+			ChildWidget.Add(*It);
+		}
+	}
+};
 
 
 
@@ -72,16 +94,7 @@ void SSCTPSMenuWidget::Construct(const FArguments& InArgs)
 
 		];
 
-
-	RootSizeBox->SetWidthOverride(519.f);
-	RootSizeBox->SetHeightOverride(800.f);
-
-	//
-	ContentBox->AddSlot()
-		[
-			SNew(SChooseSaveDataWidget)
-		
-		];
+	InitializedMenuList();
 
 }
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -100,4 +113,99 @@ void SSCTPSMenuWidget::ChangeCulture(ECultureTeam Cultrue)
 void SSCTPSMenuWidget::ChangeVolume(const float MusicVol, const float SoundVol)
 {
 	SCTPSHandle::Get()->ChangeVolume(MusicVol, SoundVol);
+}
+
+void SSCTPSMenuWidget::InitializedMenuList()
+{
+	//实例化主界面
+	TArray<TSharedPtr<SCompoundWidget>>MainMenuList;
+	MainMenuList.Add(SNew(SSCTPSMenuItemWidget).ItemText(NSLOCTEXT("SCTPSMenu", "StartGame", "StartGame")).ItemType(EMenuItem::StartGame).OnClicked(this, &SSCTPSMenuWidget::MenuItemOnClicked));
+	MainMenuList.Add(SNew(SSpacerWidget));
+	MainMenuList.Add(SNew(SSCTPSMenuItemWidget).ItemText(NSLOCTEXT("SCTPSMenu", "GameOption", "GameOption")).ItemType(EMenuItem::GameOption).OnClicked(this, &SSCTPSMenuWidget::MenuItemOnClicked));
+	MainMenuList.Add(SNew(SSpacerWidget));
+	MainMenuList.Add(SNew(SSCTPSMenuItemWidget).ItemText(NSLOCTEXT("SCTPSMenu", "QuitGame", "QuitGame")).ItemType(EMenuItem::QuitGame).OnClicked(this, &SSCTPSMenuWidget::MenuItemOnClicked));
+
+	MenuMap.Add(EMenuType::MainMenu, MakeShareable(new MenuGroup(NSLOCTEXT("SCTPSMenu", "Menu", "Menu"), 510.f, &MainMenuList)));
+
+
+	//开始游戏界面实例化
+	TArray<TSharedPtr<SCompoundWidget>>StartGameList;
+	StartGameList.Add(SNew(SSCTPSMenuItemWidget).ItemText(NSLOCTEXT("SCTPSMenu", "NewGame", "NewGame")).ItemType(EMenuItem::StartGame).OnClicked(this, &SSCTPSMenuWidget::MenuItemOnClicked));
+	StartGameList.Add(SNew(SSpacerWidget));
+	StartGameList.Add(SNew(SSCTPSMenuItemWidget).ItemText(NSLOCTEXT("SCTPSMenu", "LoadRecord", "LoadRecord")).ItemType(EMenuItem::GameOption).OnClicked(this, &SSCTPSMenuWidget::MenuItemOnClicked));
+	StartGameList.Add(SNew(SSpacerWidget));
+	StartGameList.Add(SNew(SSCTPSMenuItemWidget).ItemText(NSLOCTEXT("SCTPSMenu", "GoBack", "GoBack")).ItemType(EMenuItem::QuitGame).OnClicked(this, &SSCTPSMenuWidget::MenuItemOnClicked));
+
+	MenuMap.Add(EMenuType::StartGame, MakeShareable(new MenuGroup(NSLOCTEXT("SCTPSMenu", "StartGame", "StartGame"), 510.f, &StartGameList)));
+
+
+	//游戏设置界面实例化
+	TArray<TSharedPtr<SCompoundWidget>>GameOptionList;
+	SAssignNew(GameOptionWidget, SSCTPSGameOptionWidget)
+		.ChangeCulture(this, &SSCTPSMenuWidget::ChangeCulture)  //绑定函数到委托
+		.ChangeVolume(this, &SSCTPSMenuWidget::ChangeVolume);   //绑定函数到委托
+
+	GameOptionList.Add(GameOptionWidget);
+	GameOptionList.Add(SNew(SSpacerWidget));
+	GameOptionList.Add(SNew(SSCTPSMenuItemWidget).ItemText(NSLOCTEXT("SCTPSMenu", "GoBack", "GoBack")).ItemType(EMenuItem::GameOptionGoback).OnClicked(this, &SSCTPSMenuWidget::MenuItemOnClicked));
+
+	MenuMap.Add(EMenuType::GameOption, MakeShareable(new MenuGroup(NSLOCTEXT("SCTPSMenu", "GameOption", "GameOption"), 610.f, &GameOptionList)));
+
+
+	//开始新游戏界面
+	TArray<TSharedPtr<SCompoundWidget>>NewGameList;
+	SAssignNew(NewGameWidget, SNewGameWidget);
+	NewGameList.Add(NewGameWidget);
+	NewGameList.Add(SNew(SSpacerWidget));
+	NewGameList.Add(SNew(SSCTPSMenuItemWidget).ItemText(NSLOCTEXT("SCTPSMenu", "EnterGame", "EnterGame")).ItemType(EMenuItem::EnterGame).OnClicked(this, &SSCTPSMenuWidget::MenuItemOnClicked));
+	NewGameList.Add(SNew(SSpacerWidget));
+	NewGameList.Add(SNew(SSCTPSMenuItemWidget).ItemText(NSLOCTEXT("SCTPSMenu", "GoBack", "GoBack")).ItemType(EMenuItem::NewGameGoBack).OnClicked(this, &SSCTPSMenuWidget::MenuItemOnClicked));
+
+	MenuMap.Add(EMenuType::NewGame, MakeShareable(new MenuGroup(NSLOCTEXT("SCTPSMenu", "NewGame", "NewGame"), 510.f, &NewGameList)));
+
+	//选择存档界面
+	TArray<TSharedPtr<SCompoundWidget>>ChooseSaveDataList;
+	SAssignNew(ChooseSaveDataWidget, SChooseSaveDataWidget);
+	NewGameList.Add(ChooseSaveDataWidget);
+	NewGameList.Add(SNew(SSpacerWidget));
+	NewGameList.Add(SNew(SSCTPSMenuItemWidget).ItemText(NSLOCTEXT("SCTPSMenu", "EnterRecord", "EnterRecord")).ItemType(EMenuItem::EnterRecord).OnClicked(this, &SSCTPSMenuWidget::MenuItemOnClicked));
+	NewGameList.Add(SNew(SSpacerWidget));
+	NewGameList.Add(SNew(SSCTPSMenuItemWidget).ItemText(NSLOCTEXT("SCTPSMenu", "GoBack", "GoBack")).ItemType(EMenuItem::SelecteRecordGoBack).OnClicked(this, &SSCTPSMenuWidget::MenuItemOnClicked));
+
+	MenuMap.Add(EMenuType::ChooseSaveData, MakeShareable(new MenuGroup(NSLOCTEXT("SCTPSMenu", "LoadRecord", "LoadRecord"), 510.f, &ChooseSaveDataList)));
+
+
+	//默认选择的控件
+	ChooseWidget(EMenuType::MainMenu);
+
+
+
+}
+
+void SSCTPSMenuWidget::ChooseWidget(EMenuType::Type WidgetType)
+{
+	//移除组件
+	ContentBox->ClearChildren();
+	//如果MenuType是None
+	if (WidgetType == EMenuType::None)return;
+	//循环添加组件
+	for (TArray<TSharedPtr<SCompoundWidget>>::TIterator It((*MenuMap.Find(WidgetType))->ChildWidget);It;++It)
+	{
+		ContentBox->AddSlot().AutoHeight()[(*It)->AsShared()];
+	}
+	//更改标题
+	TitleText->SetText((*MenuMap.Find(WidgetType))->MenuName);
+	//修改Size
+	ChangeWidgetSize(600.f, (*MenuMap.Find(WidgetType))->MenuHeight);
+
+
+}
+
+//如果不修改高度，NewHeight传入-1
+void SSCTPSMenuWidget::ChangeWidgetSize(float NewWidth, float NewHeight)
+{
+	RootSizeBox->SetWidthOverride(NewWidth);
+	if (NewHeight < 0)return;
+	RootSizeBox->SetHeightOverride(NewHeight);
+	
 }

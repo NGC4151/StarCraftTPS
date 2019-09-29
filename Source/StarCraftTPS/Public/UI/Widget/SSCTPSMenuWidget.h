@@ -6,11 +6,13 @@
 #include "Widgets/SCompoundWidget.h"
 #include "SCTPSType.h"
 
-
 class SBox;
 class STextBlock;
 class SVerticalBox;
-
+class SSCTPSGameOptionWidget;
+class SNewGameWidget;
+class SChooseSaveDataWidget;
+struct MenuGroup;
 
 
 /**
@@ -33,6 +35,12 @@ private:
 	void ChangeCulture(ECultureTeam Cultrue);
 	//修改音量
 	void ChangeVolume(const float MusicVol, const float SoundVol);
+	//初始化所有控件
+	void InitializedMenuList();
+	//选择Widget
+	void ChooseWidget(EMenuType::Type WidgetType);
+	//修改控件宽和高
+	void ChangeWidgetSize(float Newwidth, float NewHeight);
 
 
 private:
@@ -44,6 +52,15 @@ private:
 	const struct FSCTPSStyle *MenueStyle;
 	//垂直面板的指针
 	TSharedPtr<SVerticalBox>ContentBox;
+	//保存菜单组
+	TMap<EMenuType::Type, TSharedPtr<MenuGroup>>MenuMap;
+	//新游戏控件的指针
+	TSharedPtr<SNewGameWidget>NewGameWidget;
+	//游戏设置控件的指针
+	TSharedPtr<SSCTPSGameOptionWidget>GameOptionWidget;
+	//选择存档控件指针
+	TSharedPtr<SChooseSaveDataWidget>ChooseSaveDataWidget;
+
 
 	
 };
