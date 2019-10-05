@@ -26,7 +26,7 @@ void SSCTPSMenuHUDWidget::Construct(const FArguments& InArgs)
 		    [
 				SNew(SOverlay)
 					+ SOverlay::Slot()
-					.HAlign(HAlign_Fill)
+					.HAlign(HAlign_Right)
 					.VAlign(VAlign_Fill)
 					[
 						SNew(SImage)

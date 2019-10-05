@@ -5,6 +5,9 @@
 #include "SCTPSSingleton.h"
 #include "SCTPSJsonHandle.h"
 #include "SCTPSHelper.h"
+#include "Style/SCTPSStyle.h"
+#include "SCTPSWidgetStyle.h"
+#include <Sound/SoundCue.h>
 
 TSharedPtr<SCTPSHandle>SCTPSHandle::DataInstans = NULL;
 
@@ -45,10 +48,22 @@ void SCTPSHandle::ChangeVolume(float MusicVol, float SoundVol)
 	if (MusicVol>0)
 	{
 		MusicValue = MusicVol;
+		//循环设置背景音量
+		for (TArray<USoundCue*>::TIterator It(MenuAudioRes.Find(FString("Music"))->CreateIterator()); It; ++It)
+		{
+			//设置音量
+			(*It)->VolumeMultiplier = MusicValue;
+		}
+
 	}
 	if (SoundVol>0)
 	{
 		SoundValue = SoundVol;
+
+		for (TArray<USoundCue*>::TIterator It(MenuAudioRes.Find(FString("Sound"))->CreateIterator()); It; ++It)
+		{
+			(*It)->VolumeMultiplier = SoundValue;
+		}
 	}
 	//更新存档数据
 	SCTPSSingleton<SCTPSJsonHandle>::Get()->UpDateSaveData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCultrue), MusicValue, SoundValue, &SaveDataList);
@@ -64,6 +79,8 @@ SCTPSHandle::SCTPSHandle()
 {
 	//初始化存档数据
 	InitializeSaveData();
+	//初始化音乐
+	InitiMenuAudio();
 }
 
 template<typename TEnum>
@@ -116,4 +133,26 @@ void SCTPSHandle::InitializeSaveData()
 
 }
 
+void SCTPSHandle::InitiMenuAudio()
+{
+	//获取编辑器的MenuStyle
+	MenueStyle = &SCTPSStyle::Get().GetWidgetStyle<FSCTPSStyle>("BP_SCTPSMenuStyle");
+
+	//添加SoundCue资源到USound类型数组
+	TArray<USoundCue*>MusicList;
+	MusicList.Add(Cast<USoundCue>(MenueStyle->BackgroundMusic.GetResourceObject()));
+
+	TArray<USoundCue*>SoundList;
+	SoundList.Add(Cast<USoundCue>(MenueStyle->MenuChangeSound.GetResourceObject()));
+	SoundList.Add(Cast<USoundCue>(MenueStyle->ButtonPressedSound.GetResourceObject()));
+
+	//添加资源到Tmap
+	MenuAudioRes.Add(FString("Music"), MusicList);
+	MenuAudioRes.Add(FString("Sound"), SoundList);
+
+	//重置下声音
+	ChangeVolume(MusicValue, SoundValue);
+	
+
+}
 

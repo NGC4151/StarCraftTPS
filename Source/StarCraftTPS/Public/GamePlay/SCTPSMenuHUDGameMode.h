@@ -16,5 +16,8 @@ class STARCRAFTTPS_API ASCTPSMenuHUDGameMode : public AGameModeBase
 
 public:
 	ASCTPSMenuHUDGameMode();
+
+protected:
+	virtual void BeginPlay()override;
 	
 };

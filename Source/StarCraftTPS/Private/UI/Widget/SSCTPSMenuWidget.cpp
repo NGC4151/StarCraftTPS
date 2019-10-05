@@ -17,6 +17,9 @@
 #include "SBoxPanel.h"
 #include "SSpacerWidget.h"
 #include "SCTPSType.h"
+#include <SlateApplication.h>
+#include "SCMenuController.h"
+#include <Kismet/GameplayStatics.h>
 
 
 struct MenuGroup 
@@ -48,6 +51,8 @@ void SSCTPSMenuWidget::Construct(const FArguments& InArgs)
 	
 	//»ñÈ¡±à¼­Æ÷µÄMenuStyle
 	MenueStyle = &SCTPSStyle::Get().GetWidgetStyle<FSCTPSStyle>("BP_SCTPSMenuStyle");
+	//²¥·Å±³¾°ÒôÀÖ
+	FSlateApplication::Get().PlaySound(MenueStyle->BackgroundMusic);
 
 	ChildSlot
 		[
@@ -163,7 +168,7 @@ void SSCTPSMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
 		break;
 	case EMenuItem::QuitGame:
 		SCTPSHelper::Debug(FString("QuitGame"), 3.0f, FColor::Blue);
-		ControlLocked = false;
+		SCTPSHelper::PlaySoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenueStyle->ButtonPressedSound, this, &SSCTPSMenuWidget::QuitGame);
 		break;
 	case EMenuItem::NewGame:
 		PlayAnimation(EMenuType::NewGame);
@@ -190,10 +195,18 @@ void SSCTPSMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
 		SCTPSHelper::Debug(FString("SelecteRecordGoBack"), 3.0f, FColor::Blue);
 		break;
 	case EMenuItem::EnterGame:
-		ControlLocked = false;
+		if (NewGameWidget->CanEnterGame())
+		{
+			SCTPSHelper::PlaySoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenueStyle->ButtonPressedSound, this, &SSCTPSMenuWidget::EnterGame);
+		}
+		else
+		{
+			ControlLocked = false;
+		}
 		break;
 	case EMenuItem::EnterRecord:
-		ControlLocked = false;
+		ChooseSaveDataWidget->UpdataSaveDataName();
+		SCTPSHelper::PlaySoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenueStyle->ButtonPressedSound, this, &SSCTPSMenuWidget::EnterGame);
 		break;
 	}
 	
@@ -330,5 +343,19 @@ void SSCTPSMenuWidget::PlayAnimation(EMenuType::Type MenuType)
 	//ÉèÖÃ²¥·Å×´Ì¬Îª¹Ø±Õ
 	AnimState = EMenuAnim::close;
 	MenuAnimation.PlayReverse(this->AsShared());
+	//²¥·ÅÇÐ»»²Ëµ¥ÒôÐ§
+	FSlateApplication::Get().PlaySound(MenueStyle->MenuChangeSound);
 
+}
+
+void SSCTPSMenuWidget::QuitGame()
+{
+	Cast<ASCMenuController>(UGameplayStatics::GetPlayerController(GWorld, 0))->ConsoleCommand("quit");
+	
+}
+
+void SSCTPSMenuWidget::EnterGame()
+{
+	UGameplayStatics::OpenLevel(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), FName("Map1"));
+	GEngine->GameViewport->RemoveAllViewportWidgets();
 }

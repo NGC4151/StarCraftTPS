@@ -7,6 +7,7 @@
 #include "SlateWidgetStyleContainerBase.h"
 #include "SlateBrush.h"
 #include "SlateFontInfo.h"
+#include <SlateSound.h>
 
 #include "SCTPSWidgetStyle.generated.h"
 
@@ -48,6 +49,14 @@ struct STARCRAFTTPS_API FSCTPSStyle : public FSlateWidgetStyle
 		FSlateBrush SliderImage;
 	UPROPERTY(EditAnywhere, Category = GameOption)
 		FSliderStyle MySliderStyle;
+
+	//音效及背景音乐资源
+	UPROPERTY(EditAnywhere, Category = Sound)
+		FSlateSound ButtonPressedSound;
+	UPROPERTY(EditAnywhere, Category = Sound)
+		FSlateSound MenuChangeSound;
+	UPROPERTY(EditAnywhere, Category = Sound)
+		FSlateSound BackgroundMusic;
 
 	//字体大小
 	UPROPERTY(EditAnywhere, Category = Common)

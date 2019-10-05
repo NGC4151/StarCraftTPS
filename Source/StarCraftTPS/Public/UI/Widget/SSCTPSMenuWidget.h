@@ -49,6 +49,11 @@ private:
 	void InitializedAnimation();
 	//通知某个控件播放动画
 	void PlayAnimation(EMenuType::Type MenuType);
+	//退出游戏
+	void QuitGame();
+	//进入游戏
+	void EnterGame();
+	//
 
 
 private:

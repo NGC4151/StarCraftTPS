@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "SCTPSType.h"
 
+
+class USoundCue;
+
 /**
  * 
  */
@@ -49,9 +52,16 @@ private:
 
 	//初始化存档数据
 	void InitializeSaveData();
+	//初始化声音数据
+	void InitiMenuAudio();
 
 private:
+
 	static TSharedPtr<SCTPSHandle>DataInstans;
+	//用Tmap保存菜单音效资源的指针
+	TMap<FString, TArray<USoundCue*>>MenuAudioRes;
+	//这个结构是SCTPSWidgetStyle里声明的，里面存储画刷、控件等元素
+	const struct FSCTPSStyle *MenueStyle;
 };
 
 
