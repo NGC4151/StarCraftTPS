@@ -28,6 +28,5 @@ void ASCTPSGameMode::Tick(float DeltaSeconds)
 
 void ASCTPSGameMode::BeginPlay()
 {
-	SCTPSHelper::Debug(FString("DateHandle: ") + SCTPSHandle::Get()->SaveName, 5.0f, FColor::Blue);
-	SCTPSHelper::Debug(FString("GameIns: ") + Cast<USCTPSGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->GameName.ToString(),20.f,FColor::Blue);
+
 }
