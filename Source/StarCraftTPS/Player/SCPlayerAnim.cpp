@@ -2,3 +2,8 @@
 
 #include "SCPlayerAnim.h"
 
+USCPlayerAnim::USCPlayerAnim()
+{
+	Speed = 0.f;
+	SpineRotator = FRotator(0.f, 0.f, 0.f);
+}

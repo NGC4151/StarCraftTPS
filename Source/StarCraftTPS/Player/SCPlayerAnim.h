@@ -13,5 +13,14 @@ UCLASS()
 class STARCRAFTTPS_API USCPlayerAnim : public UAnimInstance
 {
 	GENERATED_BODY()
+
+public:
+	USCPlayerAnim();
 	
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "PlayAnim")
+		float Speed;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "PlayAnim")
+		FRotator SpineRotator;
 };

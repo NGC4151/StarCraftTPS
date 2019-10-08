@@ -6,12 +6,15 @@
 #include"Components/SkeletalMeshComponent.h"
 #include <GameFramework/SpringArmComponent.h>
 #include <Camera/CameraComponent.h>
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 ASCCharacter::ASCCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	GetCapsuleComponent()->SetCollisionProfileName(FName("PlayerProfile"));
 
 	//设置第一人称的属性
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh>FirstMeshRes(TEXT("SkeletalMesh'/Game/Characters/HeroFPP/HeroFPP.HeroFPP'"));
@@ -30,10 +33,11 @@ ASCCharacter::ASCCharacter()
 	FirstMesh->SetRelativeLocation(FVector(0.f, 0.f, -95.f));
 	FirstMesh->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
 
-
+	static ConstructorHelpers::FClassFinder<UAnimInstance>FPSAnimIns(TEXT("AnimBlueprint'/Game/BluePrint/PlayerAnim/FPS_Anim.FPS_Anim_C'"));
+	FirstMesh->AnimClass = FPSAnimIns.Class;
 
 	//设置第三人称Mesh的属性
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh>ThMesh(TEXT("SkeletalMesh'/Game/AnimStarterPack/UE4_Mannequin/Mesh/SK_Mannequin.SK_Mannequin'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh>ThMesh(TEXT("SkeletalMesh'/Game/Characters/HeroTPP/HeroTPP.HeroTPP'"));
 	GetMesh()->SetSkeletalMesh(ThMesh.Object);
 	GetMesh()->SetOnlyOwnerSee ( true);
 	GetMesh()->SetReceivesDecals (false);
@@ -42,6 +46,10 @@ ASCCharacter::ASCCharacter()
 	GetMesh()->SetCollisionResponseToAllChannels(ECR_Ignore);
 	GetMesh()->SetRelativeLocation(FVector(0.f, 0.f, -95.f));
 	GetMesh()->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
+
+	//设置第三人称Mesh的动画
+	static ConstructorHelpers::FClassFinder<UAnimInstance>TPSAnimIns(TEXT("AnimBlueprint'/Game/BluePrint/PlayerAnim/TPS_Anim.TPS_Anim_C'"));
+	GetMesh()->AnimClass = TPSAnimIns.Class;
 
 	//摄像机臂
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
