@@ -74,7 +74,8 @@ ASCCharacter::ASCCharacter()
 	FirstCamera->SetRelativeLocation(FVector(0.f, 0.f, 60.f));
 
 
-
+	ThirdCamera->SetActive(true);
+	FirstCamera->SetActive(false);
 
 }
 
@@ -96,6 +97,61 @@ void ASCCharacter::Tick(float DeltaTime)
 void ASCCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	check(PlayerInputComponent);
+
+	PlayerInputComponent->BindAxis("MoveForward", this, &ASCCharacter::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &ASCCharacter::MoveRight);
+
+}
+
+void ASCCharacter::MoveForward(float Value)
+{
+	if (Value!=0&&Controller)
+	{
+		const FRotator Rotation = Controller->GetControlRotation();
+		FVector Direction = FRotationMatrix(Rotation).GetScaledAxis(EAxis::X);
+		AddMovementInput(Direction, Value);
+	}
+}
+
+void ASCCharacter::MoveRight(float Value)
+{
+	if (Value!=0)
+	{
+		const FQuat Rotation = GetActorQuat();
+		FVector Direction = FQuatRotationMatrix(Rotation).GetScaledAxis(EAxis::Y);
+		AddMovementInput(Direction, Value);
+	}
+}
+
+void ASCCharacter::Turn(float Value)
+{
+
+}
+
+void ASCCharacter::LookUp(float Value)
+{
+
+}
+
+void ASCCharacter::OnStartJump()
+{
+
+}
+
+void ASCCharacter::OnStopJump()
+{
+
+}
+
+void ASCCharacter::OnStartRun()
+{
+
+}
+
+void ASCCharacter::OnStopRun()
+{
 
 }
 

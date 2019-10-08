@@ -31,12 +31,18 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, Category = "Mesh")
 		 UCameraComponent* ThirdCamera;
 
-
-
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+private:
+	void MoveForward(float Value);
+	void MoveRight(float Value);
+	void Turn(float Value);
+	void LookUp(float Value);
+	void OnStartJump();
+	void OnStopJump();
+	void OnStartRun();
+	void OnStopRun();
 
 private:
 
