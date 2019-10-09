@@ -16,11 +16,19 @@ class STARCRAFTTPS_API USCTPSPlayerAnim : public USCPlayerAnim
 public:
 	USCTPSPlayerAnim();
 
+
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "PlayAnim")
 		bool bIsInAir;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "PlayAnim")
 		float Direction;
+protected:
+
+	virtual void UpdateParater()override;
+
+
+
 
 	
 };

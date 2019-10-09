@@ -49,4 +49,7 @@ private:
 	UPROPERTY(VisibleDefaultsOnly, Category = "Mesh")
 		USkeletalMeshComponent* FirstMesh;
 
+	float LookUpRate;
+	float TurnRate;
+
 };

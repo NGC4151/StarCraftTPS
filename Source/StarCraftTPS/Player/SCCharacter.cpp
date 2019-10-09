@@ -7,6 +7,7 @@
 #include <GameFramework/SpringArmComponent.h>
 #include <Camera/CameraComponent.h>
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 ASCCharacter::ASCCharacter()
@@ -77,6 +78,14 @@ ASCCharacter::ASCCharacter()
 	ThirdCamera->SetActive(true);
 	FirstCamera->SetActive(false);
 
+	FirstMesh->SetOwnerNoSee(true);
+	GetMesh()->SetOwnerNoSee(false);
+
+	LookUpRate = 45.f;
+	TurnRate = 45.f;
+
+	GetCharacterMovement()->MaxWalkSpeed = 150.f;
+
 }
 
 // Called when the game starts or when spawned
@@ -102,6 +111,15 @@ void ASCCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ASCCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ASCCharacter::MoveRight);
+	PlayerInputComponent->BindAxis("Turn", this, &ASCCharacter::Turn);
+	PlayerInputComponent->BindAxis("LookUp", this, &ASCCharacter::LookUp);
+
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ASCCharacter::OnStartJump);
+	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ASCCharacter::OnStopJump);
+
+	PlayerInputComponent->BindAction("Run", IE_Pressed, this, &ASCCharacter::OnStartRun);
+	PlayerInputComponent->BindAction("Run", IE_Released, this, &ASCCharacter::OnStopRun);
+
 
 }
 
@@ -127,31 +145,32 @@ void ASCCharacter::MoveRight(float Value)
 
 void ASCCharacter::Turn(float Value)
 {
-
+	AddControllerYawInput(Value*LookUpRate*GetWorld()->GetDeltaSeconds());
 }
 
 void ASCCharacter::LookUp(float Value)
 {
-
+	AddControllerPitchInput(Value*TurnRate*GetWorld()->GetDeltaSeconds());
 }
 
 void ASCCharacter::OnStartJump()
 {
-
+	bPressedJump = true;
 }
 
 void ASCCharacter::OnStopJump()
 {
-
+	bPressedJump = false;
+	StopJumping();
 }
 
 void ASCCharacter::OnStartRun()
 {
-
+	GetCharacterMovement()->MaxWalkSpeed = 375.f;
 }
 
 void ASCCharacter::OnStopRun()
 {
-
+	GetCharacterMovement()->MaxWalkSpeed = 150.f;
 }
 

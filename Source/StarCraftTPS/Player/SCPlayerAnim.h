@@ -23,4 +23,13 @@ public:
 		float Speed;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "PlayAnim")
 		FRotator SpineRotator;
+protected:
+	virtual void NativeUpdateAnimation(float DeltaSeconds)override;
+protected:
+	void GetCharactorPointer();
+
+	virtual void UpdateParater();
+
+protected:
+	class ASCCharacter* Charactor;
 };
