@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "StarCraftTPS/Public/Data/SCTPSType.h"
 #include "SCCharacter.generated.h"
 
 class USkeletalMeshComponent;
@@ -23,6 +24,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	//«–ªª ”Ω«
+	void ChangeView(EGameViewMode::Type NewViewMode);
+
 public:
 	UPROPERTY(VisibleDefaultsOnly, Category = "Mesh")
 		class USpringArmComponent* CameraBoom;
@@ -30,10 +34,13 @@ public:
 		class UCameraComponent* FirstCamera;
 	UPROPERTY(VisibleDefaultsOnly, Category = "Mesh")
 		 UCameraComponent* ThirdCamera;
+	//”Œœ∑ ”Ω«
+	EGameViewMode::Type GameViewMode;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
 private:
 	void MoveForward(float Value);
 	void MoveRight(float Value);

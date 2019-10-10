@@ -7,6 +7,7 @@
 #include <GameFramework/SpringArmComponent.h>
 #include <Camera/CameraComponent.h>
 #include "Components/CapsuleComponent.h"
+#include "StarCraftTPS/Public/Data/SCTPSType.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
@@ -34,6 +35,7 @@ ASCCharacter::ASCCharacter()
 	FirstMesh->SetRelativeLocation(FVector(0.f, 0.f, -95.f));
 	FirstMesh->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
 
+	//设置第一人称Mesh的动画
 	static ConstructorHelpers::FClassFinder<UAnimInstance>FPSAnimIns(TEXT("AnimBlueprint'/Game/BluePrint/PlayerAnim/FPS_Anim.FPS_Anim_C'"));
 	FirstMesh->AnimClass = FPSAnimIns.Class;
 
@@ -68,23 +70,29 @@ ASCCharacter::ASCCharacter()
 	//设置第三人称的相机旋转不随控制器
 	ThirdCamera->bUsePawnControlRotation = false;
 
-	//设置第三人称相机
+	//设置第一人称相机
 	FirstCamera= CreateDefaultSubobject<UCameraComponent>(TEXT("FirstCamera"));
 	FirstCamera->SetupAttachment((USceneComponent*)GetCapsuleComponent());
 	FirstCamera->bUsePawnControlRotation = true;
 	FirstCamera->SetRelativeLocation(FVector(0.f, 0.f, 60.f));
 
-
+	//初始化为第三人称视角
 	ThirdCamera->SetActive(true);
 	FirstCamera->SetActive(false);
 
+	//初始化第三人称视角骨架网格的可见性
 	FirstMesh->SetOwnerNoSee(true);
 	GetMesh()->SetOwnerNoSee(false);
 
+	//鼠标旋转视角的乘因
 	LookUpRate = 45.f;
 	TurnRate = 45.f;
 
-	GetCharacterMovement()->MaxWalkSpeed = 150.f;
+	//设置默认的最大行走速度为150.f
+	GetCharacterMovement()->MaxWalkSpeed = 200.f;
+
+	//初始化视角为第三人称
+	GameViewMode = EGameViewMode::Third;
 
 }
 
@@ -121,6 +129,26 @@ void ASCCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction("Run", IE_Released, this, &ASCCharacter::OnStopRun);
 
 
+}
+
+void ASCCharacter::ChangeView(EGameViewMode::Type NewViewMode)
+{
+	GameViewMode = NewViewMode;
+	switch (GameViewMode)
+	{
+	case EGameViewMode::First:
+		FirstCamera->SetActive(true);
+		ThirdCamera->SetActive(false);
+		FirstMesh->SetOwnerNoSee(false);
+		GetMesh()->SetOwnerNoSee(true);
+		break;
+	case EGameViewMode::Third:
+		FirstCamera->SetActive(false);
+		ThirdCamera->SetActive(true);
+		FirstMesh->SetOwnerNoSee(true);
+		GetMesh()->SetOwnerNoSee(false);
+		break;
+	}
 }
 
 void ASCCharacter::MoveForward(float Value)
@@ -171,6 +199,6 @@ void ASCCharacter::OnStartRun()
 
 void ASCCharacter::OnStopRun()
 {
-	GetCharacterMovement()->MaxWalkSpeed = 150.f;
+	GetCharacterMovement()->MaxWalkSpeed = 200.f;
 }
 

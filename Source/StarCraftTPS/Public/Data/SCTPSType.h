@@ -62,3 +62,10 @@ namespace EMenuAnim
 		close
 	};
 }
+
+namespace EGameViewMode {
+	enum Type {
+		First,
+		Third
+	};
+}
