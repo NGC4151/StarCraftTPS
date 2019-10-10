@@ -6,6 +6,8 @@
 #include "Animation/AnimInstance.h"
 #include "SCPlayerAnim.generated.h"
 
+class UAnimMontage;
+
 /**
  * 
  */
@@ -30,6 +32,12 @@ protected:
 
 	virtual void UpdateParater();
 
+	virtual void UpdateMontage();
+
 protected:
+	//Ω«…´÷∏’Î
 	class ASCCharacter* Charactor;
+
+	//√…Ã´∆Ê÷∏’Î
+	UAnimMontage* TPSReload;
 };

@@ -4,9 +4,14 @@
 #include "SCCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "SCTPSHelper.h"
+#include <ConstructorHelpers.h>
+#include <Animation/AnimMontage.h>
 
 USCTPSPlayerAnim::USCTPSPlayerAnim()
 {
+	static ConstructorHelpers::FObjectFinder<UAnimMontage>TPSReloadMotage(TEXT("AnimMontage'/Game/Characters/HeroTPP/HeroTTP_RifleReload.HeroTTP_RifleReload'"));
+	TPSReload = TPSReloadMotage.Object;
+
 	bIsInAir = false;
 	Direction = 0.f;
 }

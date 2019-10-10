@@ -15,6 +15,8 @@ void USCPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
 	GetCharactorPointer();
 
 	UpdateParater();
+
+	UpdateMontage();
 }
 
 void USCPlayerAnim::GetCharactorPointer()
@@ -28,4 +30,13 @@ void USCPlayerAnim::UpdateParater()
 	Speed = Charactor->GetVelocity().Size();
 }
 
+void USCPlayerAnim::UpdateMontage()
+{
+
+	if (!Charactor)return;
+	if (!Montage_IsPlaying(TPSReload))
+	{
+		Montage_Play(TPSReload);
+	}
+}
 

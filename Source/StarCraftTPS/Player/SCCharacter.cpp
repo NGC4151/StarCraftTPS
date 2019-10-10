@@ -89,7 +89,7 @@ ASCCharacter::ASCCharacter()
 	TurnRate = 45.f;
 
 	//设置默认的最大行走速度为150.f
-	GetCharacterMovement()->MaxWalkSpeed = 200.f;
+	GetCharacterMovement()->MaxWalkSpeed = 150.f;
 
 	//初始化视角为第三人称
 	GameViewMode = EGameViewMode::Third;
@@ -199,6 +199,6 @@ void ASCCharacter::OnStartRun()
 
 void ASCCharacter::OnStopRun()
 {
-	GetCharacterMovement()->MaxWalkSpeed = 200.f;
+	GetCharacterMovement()->MaxWalkSpeed = 150.f;
 }
 
