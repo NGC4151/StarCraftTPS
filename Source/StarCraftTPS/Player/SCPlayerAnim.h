@@ -30,8 +30,10 @@ protected:
 protected:
 	void GetCharactorPointer();
 
+	//重写更新参数函数
 	virtual void UpdateParater();
 
+	//重写更新蒙太奇函数
 	virtual void UpdateMontage();
 
 protected:
@@ -39,5 +41,6 @@ protected:
 	class ASCCharacter* Charactor;
 
 	//蒙太奇指针
-	UAnimMontage* TPSReload;
+	UAnimMontage* Reload;
+	UAnimMontage* Fire;
 };

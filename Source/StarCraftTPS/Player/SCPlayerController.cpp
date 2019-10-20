@@ -33,8 +33,10 @@ void ASCPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
+	//绑定视角切换的按键
 	InputComponent->BindAction("ChangeView", IE_Pressed,this, &ASCPlayerController::ChangeView);
 
+	//绑定鼠标左右键按下松开的事件
 	InputComponent->BindAction("LeftEvent", IE_Pressed, this,&ASCPlayerController::LeftEventStart);
 	InputComponent->BindAction("LeftEvent", IE_Released, this,&ASCPlayerController::LeftEventEnd);
 	InputComponent->BindAction("RightEvent", IE_Released,this, &ASCPlayerController::RightEventStart);

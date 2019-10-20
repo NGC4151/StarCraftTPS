@@ -3,6 +3,7 @@
 #include "SCPlayerAnim.h"
 #include "SCCharacter.h"
 #include "SCTPSHelper.h"
+#include <Animation/AnimMontage.h>
 
 USCPlayerAnim::USCPlayerAnim()
 {
@@ -32,11 +33,11 @@ void USCPlayerAnim::UpdateParater()
 
 void USCPlayerAnim::UpdateMontage()
 {
-
+	//≤•∑≈√…Ã´∆Ê
 	if (!Charactor)return;
-	if (!Montage_IsPlaying(TPSReload))
+	if (!Montage_IsPlaying(Reload))
 	{
-		Montage_Play(TPSReload);
+		Montage_Play(Reload);
 	}
 }
 

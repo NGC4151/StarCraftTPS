@@ -10,7 +10,10 @@
 USCTPSPlayerAnim::USCTPSPlayerAnim()
 {
 	static ConstructorHelpers::FObjectFinder<UAnimMontage>TPSReloadMotage(TEXT("AnimMontage'/Game/Characters/HeroTPP/HeroTTP_RifleReload.HeroTTP_RifleReload'"));
-	TPSReload = TPSReloadMotage.Object;
+	Reload = TPSReloadMotage.Object;
+	/**
+	 * 后期添加其他的蒙太奇，目前没有准备好美术资源
+	 */
 
 	bIsInAir = false;
 	Direction = 0.f;

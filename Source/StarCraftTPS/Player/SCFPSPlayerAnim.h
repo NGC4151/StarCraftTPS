@@ -13,5 +13,8 @@ UCLASS()
 class STARCRAFTTPS_API USCFPSPlayerAnim : public USCPlayerAnim
 {
 	GENERATED_BODY()
+
+public:
+	USCFPSPlayerAnim();
 	
 };

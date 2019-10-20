@@ -33,6 +33,7 @@ protected:
 	virtual void BeginPlay()override;
 
 private:
+
 	//«–ªª ”Ω«
 	void ChangeView();
 

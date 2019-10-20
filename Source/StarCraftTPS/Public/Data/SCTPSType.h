@@ -63,6 +63,7 @@ namespace EMenuAnim
 	};
 }
 
+//视角模式枚举
 namespace EGameViewMode {
 	enum Type {
 		First,
