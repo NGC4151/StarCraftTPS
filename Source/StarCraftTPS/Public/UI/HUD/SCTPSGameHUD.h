@@ -14,4 +14,9 @@ class STARCRAFTTPS_API ASCTPSGameHUD : public AHUD
 {
 	GENERATED_BODY()
 	
+public:
+
+	ASCTPSGameHUD();
+private:
+	TSharedPtr<class SSCGameHUDWidget>GameHUDWidget;
 };

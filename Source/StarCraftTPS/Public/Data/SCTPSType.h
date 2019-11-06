@@ -70,3 +70,17 @@ namespace EGameViewMode {
 		Third
 	};
 }
+
+//…œ∞Î…Ì∂Øª≠◊¥Ã¨
+namespace EUpperBody
+{
+	enum Type
+	{
+		None,
+		Fire,
+		Reload,
+		Aim,
+		Pick,
+		Hit
+	};
+}

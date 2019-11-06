@@ -37,6 +37,12 @@ public:
 	//游戏视角
 	EGameViewMode::Type GameViewMode;
 
+	//上半身动画状态
+	EUpperBody::Type UpperType;
+
+	//是否可以切换视角
+	bool bCanChangeView;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

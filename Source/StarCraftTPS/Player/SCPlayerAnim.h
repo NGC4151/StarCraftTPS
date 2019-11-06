@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "SCTPSType.h"
 #include "SCPlayerAnim.generated.h"
 
 class UAnimMontage;
@@ -36,6 +37,9 @@ protected:
 	//重写更新蒙太奇函数
 	virtual void UpdateMontage();
 
+	//更改是否可以切换视角
+	void CanChangeView(bool IsCanChange);
+
 protected:
 	//角色指针
 	class ASCCharacter* Charactor;
@@ -43,4 +47,14 @@ protected:
 	//蒙太奇指针
 	UAnimMontage* Reload;
 	UAnimMontage* Fire;
+	UAnimMontage* Aim;
+	UAnimMontage* Pick;
+	UAnimMontage* Hit;
+	
+
+	//保存当前播放的蒙太奇
+	UAnimMontage* CurrentMontage;
+
+	//保存当前的视角模式
+	EGameViewMode::Type GameViewMode;
 };

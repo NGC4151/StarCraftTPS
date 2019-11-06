@@ -15,6 +15,7 @@ USCTPSPlayerAnim::USCTPSPlayerAnim()
 	 * 后期添加其他的蒙太奇，目前没有准备好美术资源
 	 */
 
+	GameViewMode = EGameViewMode::Third;
 	bIsInAir = false;
 	Direction = 0.f;
 }

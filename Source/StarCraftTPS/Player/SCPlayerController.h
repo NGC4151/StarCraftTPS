@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "SCTPSType.h"
 #include "SCPlayerController.generated.h"
 
 /**
@@ -43,4 +44,9 @@ private:
 	void RightEventStart();
 	void RightEventEnd();
 
+private:
+	//左键预动作
+	EUpperBody::Type LeftUpperType;
+	//右键预动作
+	EUpperBody::Type RightUpperType;
 };

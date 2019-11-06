@@ -27,6 +27,10 @@ void ASCPlayerController::BeginPlay()
 	FInputModeGameOnly InputMode;
 	InputMode.SetConsumeCaptureMouseDown(true);
 	SetInputMode(InputMode);
+
+	//设置预动作
+	LeftUpperType = EUpperBody::Fire;
+	RightUpperType = EUpperBody::Hit;
 }
 
 void ASCPlayerController::SetupInputComponent()
@@ -46,6 +50,9 @@ void ASCPlayerController::SetupInputComponent()
 
 void ASCPlayerController::ChangeView()
 {
+	//如果不可以切换视角，则跳出
+	if (!SCCharactor->bCanChangeView)return;
+
 	switch (SCCharactor->GameViewMode)
 	{
 	case EGameViewMode::First:
@@ -59,12 +66,12 @@ void ASCPlayerController::ChangeView()
 
 void ASCPlayerController::LeftEventStart()
 {
-
+	SCCharactor->UpperType = EUpperBody::Reload;
 }
 
 void ASCPlayerController::LeftEventEnd()
 {
-
+	SCCharactor->UpperType = EUpperBody::None;
 }
 
 void ASCPlayerController::RightEventStart()

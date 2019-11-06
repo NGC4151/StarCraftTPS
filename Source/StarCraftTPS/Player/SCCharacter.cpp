@@ -94,6 +94,11 @@ ASCCharacter::ASCCharacter()
 	//初始化视角为第三人称
 	GameViewMode = EGameViewMode::Third;
 
+	//上半身动画状态初始化为none
+	UpperType=EUpperBody::None;
+	//初始化为可切换视角
+	bCanChangeView = true;
+
 }
 
 // Called when the game starts or when spawned
@@ -153,21 +158,29 @@ void ASCCharacter::ChangeView(EGameViewMode::Type NewViewMode)
 
 void ASCCharacter::MoveForward(float Value)
 {
+	if (Value!=0)
+	{
+		AddMovementInput(GetActorForwardVector()*Value);
+	}
+	
+
+	/*
 	if (Value!=0&&Controller)
 	{
 		const FRotator Rotation = Controller->GetControlRotation();
 		FVector Direction = FRotationMatrix(Rotation).GetScaledAxis(EAxis::X);
 		AddMovementInput(Direction, Value);
 	}
+	
+	*/
+	
 }
 
 void ASCCharacter::MoveRight(float Value)
 {
 	if (Value!=0)
 	{
-		const FQuat Rotation = GetActorQuat();
-		FVector Direction = FQuatRotationMatrix(Rotation).GetScaledAxis(EAxis::Y);
-		AddMovementInput(Direction, Value);
+		AddMovementInput(GetActorRightVector()*Value);
 	}
 }
 
