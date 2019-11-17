@@ -66,7 +66,7 @@ void SSCShortcutWidget::InitContainer()
 		SAssignNew(Containerborder, SBorder)
 			.Padding(FMargin(10.f))
 			//´ýÉ¾³ý
-.BorderImage(&GameStyle->NormalContainerBrush)
+			.BorderImage(&GameStyle->NormalContainerBrush)
 			[
 				SAssignNew(ImageBorder, SBorder)
 				.HAlign(HAlign_Right)
@@ -78,7 +78,7 @@ void SSCShortcutWidget::InitContainer()
 				.Font(GameStyle->Font_Outline_20)
 			.ColorAndOpacity(GameStyle->FontColor_Black)
 			//´ýÉ¾³ý
-.Text(FText::FromString("99"))
+			.Text(FText::FromString("99"))
 			]
 			];
 
