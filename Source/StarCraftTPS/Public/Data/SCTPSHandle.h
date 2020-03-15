@@ -24,6 +24,9 @@ public:
 
 	void ChangeVolume(float MusicVol,float SoundVol);
 
+	//游戏数据初始化
+	void InitializeGameData();
+
 
 public:
 	ECultureTeam CurrentCultrue;
@@ -36,6 +39,8 @@ public:
 
 	//输入的存档名
 	FString SaveName;
+	//物品属性图
+	TMap<int, TSharedPtr<ObjectAttribute>>ObjectAttributeMap;
 
 
 private:
@@ -54,6 +59,8 @@ private:
 	void InitializeSaveData();
 	//初始化声音数据
 	void InitiMenuAudio();
+	//初始化物品属性数据
+	void InitObjectAttr();
 
 private:
 

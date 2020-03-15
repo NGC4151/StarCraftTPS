@@ -17,6 +17,8 @@ class STARCRAFTTPS_API ASCTPSGameHUD : public AHUD
 public:
 
 	ASCTPSGameHUD();
+
 private:
+	//创建一个SSCGameHUDWidget的共享指针
 	TSharedPtr<class SSCGameHUDWidget>GameHUDWidget;
 };

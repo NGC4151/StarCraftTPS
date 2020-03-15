@@ -69,6 +69,7 @@ void SCTPSHandle::ChangeVolume(float MusicVol, float SoundVol)
 	SCTPSSingleton<SCTPSJsonHandle>::Get()->UpDateSaveData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCultrue), MusicValue, SoundValue, &SaveDataList);
 }
 
+
 TSharedRef<SCTPSHandle> SCTPSHandle::Create()
 {
 	TSharedRef<SCTPSHandle>DataRef = MakeShareable(new SCTPSHandle());
@@ -155,4 +156,15 @@ void SCTPSHandle::InitiMenuAudio()
 	
 
 }
+
+void SCTPSHandle::InitializeGameData()
+{
+	InitObjectAttr();
+}
+
+void SCTPSHandle::InitObjectAttr()
+{
+	SCTPSSingleton<SCTPSJsonHandle>::Get()->ObjectAttrJsonReader(ObjectAttributeMap);
+}
+
 

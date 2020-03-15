@@ -7,6 +7,7 @@ SCTPSJsonHandle::SCTPSJsonHandle()
 {
 	SaveDataFileName = FString("SaveData.json");
 	RelativePath = FString("Res/DataConfig/");
+	ObjectAttrFileName = FString("ObjectAttribute.json");
 }
 
 void SCTPSJsonHandle::ReadSaveData(FString& Culture, float& MusicVol, float&SoundVol, TArray<FString>& SaveDataList)
@@ -96,6 +97,39 @@ void SCTPSJsonHandle::UpDateSaveData(FString Culture, float MusicVol, float Soun
 
 }
 
+void SCTPSJsonHandle::ObjectAttrJsonReader(TMap<int, TSharedPtr<ObjectAttribute>>&ObjectArrtMap)
+{
+	FString JsonValue;
+	LoadStringFromFile(ObjectAttrFileName, RelativePath, JsonValue);
+
+	TArray<TSharedPtr<FJsonValue>>JsonParsed;
+	TSharedRef<TJsonReader<TCHAR>>JsonReader = TJsonReaderFactory<TCHAR>::Create(JsonValue);
+
+	if (FJsonSerializer::Deserialize(JsonReader,JsonParsed))
+	{
+		for (int i=0;i<JsonParsed.Num();++i)
+		{
+			TArray<TSharedPtr<FJsonValue>>ObjectAttr = JsonParsed[i]->AsObject()->GetArrayField(FString::FromInt(i));
+			FText EN = FText::FromString(ObjectAttr[0]->AsObject()->GetStringField("EN"));
+			FText ZH = FText::FromString(ObjectAttr[1]->AsObject()->GetStringField("ZH"));
+			FString ObjectTypeStr = ObjectAttr[2]->AsObject()->GetStringField("ObjectType");
+			int PlantAttack = ObjectAttr[3]->AsObject()->GetIntegerField("PlantAttack");
+			int MetalAttcck = ObjectAttr[4]->AsObject()->GetIntegerField("MetalAttcck");
+			int AnimalAttack = ObjectAttr[5]->AsObject()->GetIntegerField("AnimalAttack");
+			int AffectRange = ObjectAttr[6]->AsObject()->GetIntegerField("AffectRange");
+			FString TexPath = ObjectAttr[7]->AsObject()->GetStringField("TexPath");
+
+			EObjectType::Type ObjectType = StringToObjectType(ObjectTypeStr);
+			TSharedPtr<ObjectAttribute> ObjectAttrPtr = MakeShareable(new ObjectAttribute(EN, ZH, ObjectType, PlantAttack, MetalAttcck, AnimalAttack, AffectRange, TexPath));
+
+			ObjectArrtMap.Add(i, ObjectAttrPtr);
+		}
+	}
+	else {
+		SCTPSHelper::Debug(FString("Deserialize Failed"));
+	}
+}
+
 bool SCTPSJsonHandle::GetStringFromJsonData(const TSharedPtr<FJsonObject>& JsonObject, FString& JsonStr)
 {
 	if (JsonObject.IsValid()&&JsonObject->Values.Num()>0)
@@ -152,5 +186,14 @@ bool SCTPSJsonHandle::SaveDataToJsonFile(const FString& JsonStr, const FString& 
 		}
 	}
 	return false;
+}
+
+EObjectType::Type SCTPSJsonHandle::StringToObjectType(const FString ArgStr)
+{
+	if (ArgStr.Equals(FString("Normal"))) return EObjectType::Normal;
+	if (ArgStr.Equals(FString("Food"))) return EObjectType::Food;
+	if (ArgStr.Equals(FString("Tool"))) return EObjectType::Tool;
+	if (ArgStr.Equals(FString("Weapon"))) return EObjectType::Weapon;
+	return EObjectType::Normal;
 }
 

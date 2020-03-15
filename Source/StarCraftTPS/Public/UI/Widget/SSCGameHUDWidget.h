@@ -21,14 +21,14 @@ public:
 	float GetUIScaler()const;
 
 public:
+	//快捷栏指针
 	TSharedPtr<class SSCShortcutWidget>ShortcutWidget;
 
 private:
 
 	FVector2D GetViewportSize()const;
 
-
 private:
-
+	//DPI缩放的值
 	TAttribute<float>UIScaler;
 };

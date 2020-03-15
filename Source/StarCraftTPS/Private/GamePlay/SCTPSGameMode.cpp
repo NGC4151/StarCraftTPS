@@ -28,5 +28,6 @@ void ASCTPSGameMode::Tick(float DeltaSeconds)
 
 void ASCTPSGameMode::BeginPlay()
 {
-
+	//初始化游戏数据
+	SCTPSHandle::Get()->InitializeGameData();
 }

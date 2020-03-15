@@ -27,7 +27,7 @@ void SSCShortcutWidget::Construct(const FArguments& InArgs)
 		[
 			SAssignNew(ItemInfoTextBlock, STextBlock)
 			.Font(GameStyle->Font_Outline_40)
-		.ColorAndOpacity(GameStyle->FontColor_White)
+		.ColorAndOpacity(GameStyle->FontColor_Black)
 		]
 
 	+ SOverlay::Slot()
@@ -72,13 +72,14 @@ void SSCShortcutWidget::InitContainer()
 				.HAlign(HAlign_Right)
 			.VAlign(VAlign_Bottom)
 			.Padding(FMargin(0.f, 0.f, 5.f, 0.f))
+			//´ýÉ¾³ý
 			.BorderImage(&GameStyle->EmptyBrush)
 			[
 				SAssignNew(NumTextBlock, STextBlock)
 				.Font(GameStyle->Font_Outline_20)
 			.ColorAndOpacity(GameStyle->FontColor_Black)
 			//´ýÉ¾³ý
-			.Text(FText::FromString("99"))
+			.Text(FText::FromString("50"))	
 			]
 			];
 

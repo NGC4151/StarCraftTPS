@@ -84,3 +84,42 @@ namespace EUpperBody
 		Hit
 	};
 }
+
+//物品类型
+namespace EObjectType
+{
+	enum Type
+	{
+		Normal = 0,
+		Food,
+		Tool,
+		Weapon
+	};
+}
+
+
+//物品属性的结构体
+struct ObjectAttribute 
+{
+	FText ZH;
+	FText EN;
+	EObjectType::Type ObjectType;
+	int PlantAttack;
+	int MetalAttack;
+	int AnimalAttack;
+	int AttackRange;
+
+	FString TexPath;
+
+	ObjectAttribute(const FText ENName, const FText ZHName, const EObjectType::Type OT, const int PA, const int MA, const int AA, const int AR, const FString TP)
+	{
+		ZH = ZHName;
+		EN = ENName;
+		ObjectType = OT;
+		PlantAttack = PA;
+		MetalAttack = MA;
+		AnimalAttack = AA;
+		AttackRange = AR;
+		TexPath = TP;
+	}
+};
